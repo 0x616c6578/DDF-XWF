@@ -99,6 +99,12 @@ These options were derived from **Section 4** of the [DDF Specification](https:/
 <br>
 
 ## Usage
+The usage instructions below will assume you have disk images for the devices connected to the raid controller.  If you have not yet imaged a device, but have terminal access you can identify whether a device has a DDF metadata superblock with the following command:
+```bash
+sudo xxd -s -512 /dev/sdX
+```
+This shows a hexdump of the last 512 bytes of a device.  If it contains a DDF metadata superblock anchor the first bytes of this dump will be `de11 de11`.
+
 ### Reconstruction
 _A [standalone guide](Reconstruction%20Guide.md) has also been created for this process._
 1. Create a new case in XWF and add all disk images.
