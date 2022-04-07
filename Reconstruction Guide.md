@@ -33,8 +33,8 @@ _Using DDF Metadata to reconstruct a RAID array using X-Ways Forensics_
 | `25` | `00` | RAID-5EE Rotating Parity 0 with Data Restart | Level 5EE: forward parity | - The diagram in the X-Ways manual shows a default parity offset of 2 components. This needs to be confirmed.<br> - Can be reconstructed with 1 missing disk. |
 | `25` | `02` | RAID-5EE Rotating Parity N with Data Restart | Level 5EE: backward parity | - X-Ways doesn't provide an option for a parity offset with this level. <br> - Can be reconstructed with 1 missing disk. |
 | `25` | `03` | RAID-5EE Rotating Parity N with Data Continuation | | _Cannot be reconstructed._ |
-| `11` | `00` | Integrated Adjacent Stripe Mirroring | Level 0 | Reconstruct as you would normally with a spanned VD (RAID-0), discarding every second disk. |
-| `11` | `01` | Integrated Offset Stripe Mirroring | Level 0 | The 'unnecessary' blocks are consistent with a Level 6: forard parity, though this needs testing. |
+| `11` | `00` | Integrated Adjacent Stripe Mirroring | Level 0<sup>*</sup> | - Reconstruct as you would normally with a spanned VD (RAID-0), discarding every second disk. <br> - <sup>*</sup>This will only work for an even number of disks|
+| `11` | `01` | Integrated Offset Stripe Mirroring |  | _Cannot be reconstructed._ |
 | `06` | `01` | RAID 6 Rotating Parity 0 with Data Restart | Level 6: forward parity | - Can be reconstructed with 2 missing disks. |
 | `06` | `02` | RAID 6 Rotating Parity N with Data Restart | Level 6: backward parity | - Can be reconstructed with 2 missing disks. |
 | `06` | `03` | RAID 6 Rotating Parity N with Data Continuation | Level 6: backward dynamic| - Can be reconstructed with 2 missing disks. |
