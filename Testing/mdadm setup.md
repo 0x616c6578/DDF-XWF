@@ -1,6 +1,6 @@
 # Testing Environment For mdadm
 
-The following processes were used to create RAID arrays with DDF metadata superblocks on virtual hard disks.
+The following processes were used to create software RAID arrays with DDF metadata superblocks on virtual hard disks.
 
 
 ## Host Environment
