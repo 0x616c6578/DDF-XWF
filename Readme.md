@@ -8,6 +8,7 @@ This repository provides resources necessary to reconstruct RAID arrays in X-Way
   - [Reconstruction Options](#reconstruction-options)
   - [Usage](#usage)
     - [Reconstruction](#reconstruction)
+  - [ToDo](#todo)
 
 <br>
 
@@ -122,3 +123,22 @@ _A [standalone guide](Reconstruction%20Guide.md) has also been created for this 
    2. Take the strip size in sectors from the *Strip_Size* field extracted previously. 
       > **Note:** X-Ways specifies this in sectors and the formula provided (`(2^n)*512`) calculates the strip size in _bytes_.  The *DDF-Reconstruction* template used here assumes a 512-byte sector, and if you made it this far the assumption is proven accurate.  The true formula is therefore `2^n`
 6. Press **OK** to complete the reconstruction.  This will add a new item to the tab bar titled (in this example) _RAID 5: Disk-1 + Disk-4 + Disk-2 + Disk-3 + Disk-5_.  Right-Click this and add it to the case.  If you have completed all steps correctly, you will see the volume and data contained in the original volume(s) located on the RAID array.
+
+<br>
+
+## ToDo
+1. Create additional [templates](./Templates/):
+   1. Global section context
+   2. Local section context
+   3. All metadata
+2. Test additional [mdadm](./Testing/mdadm%20setup.md) parity layouts to confirm the reconstruction options table:
+   1. right-asymmetric
+   2. right-symmetric
+   3. parity-first
+   4. parity-last
+   5. ddf-zero-restart
+   6. ddf-N-restart
+   7. ddf-N-continue
+   8. RAID 5-6 intermediary blocks
+   9. RAID 10
+3. Test additional (hardware) RAID [controllers](./Testing/Controllers.md)
