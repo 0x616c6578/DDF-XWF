@@ -69,7 +69,7 @@ There are four templates available within this repository, each with a different
 <br>
 
 ## Reconstruction Options
-These options were derived from [Section 4 of the DDF Specifciation](https://www.snia.org/sites/default/files/SNIA-DDFv1.2_with_Errata_A_Applied.pdf) and [Section 10.15 Reconstructing RAID Systems](http://www.x-ways.net/winhex/manual.pdf) from the X-Ways manual.  Use this table as a reference to convert the DDF metadata field values to options within the X-Ways raid reconstruction window.  
+These options were derived from **Section 4** of the [DDF Specification](https://www.snia.org/sites/default/files/SNIA-DDFv1.2_with_Errata_A_Applied.pdf) and **Section 10.15 Reconstructing RAID Systems** from the [X-Ways manual](http://www.x-ways.net/winhex/manual.pdf).  Use this table as a reference to convert the DDF metadata field values to options within the X-Ways raid reconstruction window.  
 > Note: RAID configurations defined in DDF metadata are _universal_ and not implementation-dependent; you can disregard specific manufacturer text within the _Reconstruct RAID System_ window e.g. Adaptec, AMI, HP, etc.
 
 | PRL  | RLQ  | RAID Type                                         | X-Ways                                                                                            |
@@ -81,7 +81,7 @@ These options were derived from [Section 4 of the DDF Specifciation](https://www
 | `04` | `01` | RAID-4 Non-Rotating Parity N                      | As above, thought he parity disk may not be first.                                                |
 | `05` | `00` | RAID-5 Rotating Parity 0 with Data Restart        | Level 5: forward parity                                                                           |
 | `05` | `02` | RAID-5 Rotating Parity N with Data Restart        | Level 5: backward parity                                                                          |
-| `05` | `03` | RAID-5 Rotating Parity N with Data Continuation   | _Cannot reconstruct with data continuation.                                                       |
+| `05` | `03` | RAID-5 Rotating Parity N with Data Continuation   | _Cannot reconstruct with data continuation._                                                      |
 | `15` | `00` | RAID-5E Rotating Parity 0 with Data Restart       | _Cannot be reconstructed._                                                                        |
 | `15` | `02` | RAID-5E Rotating Parity N with Data Restart       | _Cannot be reconstructed._                                                                        |
 | `15` | `03` | RAID-5E Rotating Parity N with Data Continuation  | _Cannot be reconstructed._                                                                        |
