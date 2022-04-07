@@ -2,8 +2,6 @@
 This repository provides resources necessary to reconstruct RAID arrays in X-Ways Forensics using the DDF Metadata (RAID superblock), utilised by modern hardware RAID controllers.
 
 ## Table of contents
-- [DDF Metadata Analysis in X-Ways Forensics](#ddf-metadata-analysis-in-x-ways-forensics)
-  - [Table of contents](#table-of-contents)
   - [Background](#background)
     - [Terminology](#terminology)
   - [Templates](#templates)
