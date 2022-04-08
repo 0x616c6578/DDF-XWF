@@ -27,14 +27,22 @@ _Using DDF Metadata to reconstruct a RAID array using X-Ways Forensics_
 | `05` | `00` | RAID-5 Rotating Parity 0 with Data Restart | Level 5: forward parity | - Can be reconstructed with 1 missing disk |
 | `05` | `02` | RAID-5 Rotating Parity N with Data Restart | Level 5: backward parity | - Can be reconstructed with 1 missing disk |
 | `05` | `03` | RAID-5 Rotating Parity N with Data Continuation | Level 5: backward dynamic | - Can be reconstructed with 1 missing disk |
-| `15` | `00` | RAID-5E Rotating Parity 0 with Data Restart | Level 5: forward parity | - Identical to PRL `05` RLQ `00` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
-| `15` | `02` | RAID-5E Rotating Parity N with Data Restart | Level 5: backward parity | - Identical to PRL `05` RLQ `02` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
-| `15` | `03` | RAID-5E Rotating Parity N with Data Continuation | Level 5: backward dynamic | - Identical to PRL `05` RLQ `03` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
-| `25` | `00` | RAID-5EE Rotating Parity 0 with Data Restart | Level 5EE: forward parity | - The diagram in the X-Ways manual shows a default parity offset of 2 components. This needs to be confirmed.<br> - Can be reconstructed with 1 missing disk. |
-| `25` | `02` | RAID-5EE Rotating Parity N with Data Restart | Level 5EE: backward parity | - X-Ways doesn't provide an option for a parity offset with this level. <br> - Can be reconstructed with 1 missing disk. |
-| `25` | `03` | RAID-5EE Rotating Parity N with Data Continuation | | _Cannot be reconstructed._ |
-| `11` | `00` | Integrated Adjacent Stripe Mirroring | Level 0<sup>*</sup> | - Reconstruct as you would normally with a spanned VD (RAID-0), discarding every second disk. <br> - <sup>*</sup>This will only work for an even number of disks|
-| `11` | `01` | Integrated Offset Stripe Mirroring |  | _Cannot be reconstructed._ |
 | `06` | `01` | RAID 6 Rotating Parity 0 with Data Restart | Level 6: forward parity | - Can be reconstructed with 2 missing disks. |
 | `06` | `02` | RAID 6 Rotating Parity N with Data Restart | Level 6: backward parity | - Can be reconstructed with 2 missing disks. |
 | `06` | `03` | RAID 6 Rotating Parity N with Data Continuation | Level 6: backward dynamic| - Can be reconstructed with 2 missing disks. |
+| `07` | `00` | MDF RAID Rotating Parity 0 with Data Restart | | - Testing needed.<br> - Identical to RAID 6 with 2 parity disks |
+| `07` | `02` | MDF RAID Rotating Parity N with Data Restart | | - Testing needed.<br> - Identical to RAID 6 with 2 parity disks |
+| `07` | `03` | MDF RAID Rotating Parity N with Data Continuation | | - Testing needed.<br> - Identical to RAID 6 with 2 parity disks |
+| `0F` | `00` | Single Disk | _Not required_ | - No reconstruction is necessary; the PD contains all blocks for the VD. |
+| `11` | `00` | RAID-1E Integrated Adjacent Stripe Mirroring | Level 0<sup>*</sup> | - Reconstruct as you would normally with a spanned VD (RAID-0), discarding every second disk. <br> - <sup>*</sup>This will only work for an even number of disks|
+| `11` | `01` | RAID-1E Integrated Offset Stripe Mirroring |  | _Cannot be reconstructed._ |
+| `15` | `00` | RAID-5E Rotating Parity 0 with Data Restart | Level 5: forward parity | - Identical to PRL `05` RLQ `00` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
+| `15` | `02` | RAID-5E Rotating Parity N with Data Restart | Level 5: backward parity | - Identical to PRL `05` RLQ `02` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
+| `15` | `03` | RAID-5E Rotating Parity N with Data Continuation | Level 5: backward dynamic | - Identical to PRL `05` RLQ `03` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
+| `1F` | `00` | Concatenation | JBOD/Linear | - Testing required. There is no associated diagram in the DDF specification.
+| `25` | `00` | RAID-5EE Rotating Parity 0 with Data Restart | Level 5EE: forward parity | - The diagram in the X-Ways manual shows a default parity offset of 2 components. This needs to be confirmed.<br> - Can be reconstructed with 1 missing disk. |
+| `25` | `02` | RAID-5EE Rotating Parity N with Data Restart | Level 5EE: backward parity | - X-Ways doesn't provide an option for a parity offset with this level. <br> - Can be reconstructed with 1 missing disk. |
+| `25` | `03` | RAID-5EE Rotating Parity N with Data Continuation | | _Cannot be reconstructed._ |
+| `35` | `00` | RAID-5 Rotating Parity 0 after R Stripes with Data Restart | | _Cannot be reconstructed._ |
+| `35` | `02` | RAID-5 Rotating Parity N after R Stripes with Data Restart | | _Cannot be reconstructed._ |
+| `35` | `03` | RAID-5 Rotating Parity N after R Stripes with Data Continuation | | _Cannot be reconstructed._ |
