@@ -5,11 +5,13 @@ This repository provides resources necessary to reconstruct RAID arrays in X-Way
   - [Background](#background)
     - [Terminology](#terminology)
   - [Templates](#templates)
-  - [Reconstruction Options](#reconstruction-options)
   - [Usage](#usage)
     - [Reconstruction](#reconstruction)
   - [ToDo](#todo)
 
+### Supporting Documentation
+  - [DDF Fields.md](Documentation/DDF%20Fields.md) - Descriptions for DDF metadata fields which may not be easily interpreted from the template alone.
+  - [Reconstruction Options.md](Documentation/Reconstruction%20Options.md) - A translation table converting PRL and RLQ bytes to reconstruction options.
 <br>
 
 ## Background
@@ -70,45 +72,6 @@ There are four templates available within this repository, each with a different
 
 <br>
 
-## Reconstruction Options
-These options were derived from **Section 4** of the [DDF Specification](https://www.snia.org/sites/default/files/SNIA-DDFv1.2_with_Errata_A_Applied.pdf) and **Section 10.15 Reconstructing RAID Systems** from the [X-Ways manual](http://www.x-ways.net/winhex/manual.pdf).  Use this table as a reference to convert the DDF metadata field values to options within the X-Ways raid reconstruction window.  
-> Note: RAID configurations defined in DDF metadata are _universal_ and not implementation (manufacturer) dependent; you can disregard specific manufacturer text within the _Reconstruct RAID System_ window e.g. Adaptec, AMI, HP, etc.
-
-| PRL  | RLQ  | DDF RAID Type | X-Ways  RAID Level | Details |
-| - | - | - | - | -|
-| `00` | `00` | RAID-0 Simple Striping | Level 0 |
-| `01` | `00` | RAID-1 Simple Mirroring | _Not required_ | - No reconstruction is necessary; VD blocks are mirrored to both PDs. |
-| `01` | `01` | RAID-1 Multi Mirroring | _Not required_ | - No reconstruction is necessary; VD blocks are mirrored to all PDs. |
-| `03` | `00` | RAID-3 Non-Roating Parity 0 | | - Bit level stripping theoretically makes this impossible to  reconstruct in XWF but testing will be needed to confirm whether it can be done with reduced strip sizes. |
-| `03` | `01` | RAID-3 Non-Rotating Parity N | |- Bit level stripping theoretically makes this impossible to  reconstruct in XWF but testing will be needed to confirm whether it can be done with reduced strip sizes. |
-| `04` | `00` | RAID-4 Non-Rotating Parity 0 | Level 0| - VD Blocks are striped across _n-1_ disks, with the first being parity.<br> - Discard the parity disk to reconstruct as a RAID-0.<br> - No fault tolerance: all (non-parity) PDs are required. |
-| `04` | `01` | RAID-4 Non-Rotating Parity N | Level 0| - VD Blocks are striped across _n-1_ disks, with one being parity.<br> - Discard the parity disk to reconstruct as a RAID-0.<br> - No fault tolerance: all (non-parity) PDs are required. |
-| `05` | `00` | RAID-5 Rotating Parity 0 with Data Restart | Level 5: forward parity | - Can be reconstructed with 1 missing disk |
-| `05` | `02` | RAID-5 Rotating Parity N with Data Restart | Level 5: backward parity | - Can be reconstructed with 1 missing disk |
-| `05` | `03` | RAID-5 Rotating Parity N with Data Continuation | Level 5: backward dynamic | - Can be reconstructed with 1 missing disk |
-| `06` | `01` | RAID 6 Rotating Parity 0 with Data Restart | Level 6: forward parity | - Can be reconstructed with 2 missing disks. |
-| `06` | `02` | RAID 6 Rotating Parity N with Data Restart | Level 6: backward parity | - Can be reconstructed with 2 missing disks. |
-| `06` | `03` | RAID 6 Rotating Parity N with Data Continuation | Level 6: backward dynamic| - Can be reconstructed with 2 missing disks. |
-| `07` | `00` | MDF RAID Rotating Parity 0 with Data Restart | | - Testing needed.<br> - Identical to RAID 6 with 2 parity disks |
-| `07` | `02` | MDF RAID Rotating Parity N with Data Restart | | - Testing needed.<br> - Identical to RAID 6 with 2 parity disks |
-| `07` | `03` | MDF RAID Rotating Parity N with Data Continuation | | - Testing needed.<br> - Identical to RAID 6 with 2 parity disks |
-| `0F` | `00` | Single Disk | _Not required_ | - No reconstruction is necessary; the PD contains all blocks for the VD. |
-| `11` | `00` | RAID-1E Integrated Adjacent Stripe Mirroring | Level 0<sup>*</sup> | - Reconstruct as you would normally with a spanned VD (RAID-0), discarding every second disk. <br> - <sup>*</sup>This will only work for an even number of disks|
-| `11` | `01` | RAID-1E Integrated Offset Stripe Mirroring |  | _Cannot be reconstructed._ |
-| `15` | `00` | RAID-5E Rotating Parity 0 with Data Restart | Level 5: forward parity | - Identical to PRL `05` RLQ `00` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
-| `15` | `02` | RAID-5E Rotating Parity N with Data Restart | Level 5: backward parity | - Identical to PRL `05` RLQ `02` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
-| `15` | `03` | RAID-5E Rotating Parity N with Data Continuation | Level 5: backward dynamic | - Identical to PRL `05` RLQ `03` in used stripes.  Testing is needed to confirm whether X-Ways can reconstruct.<br> - Can be reconstructed with 1 missing disk.
-| `1F` | `00` | Concatenation | JBOD/Linear | - Testing required. There is no associated diagram in the DDF specification.
-| `25` | `00` | RAID-5EE Rotating Parity 0 with Data Restart | Level 5EE: forward parity | - The diagram in the X-Ways manual shows a default parity offset of 2 components. This needs to be confirmed.<br> - Can be reconstructed with 1 missing disk. |
-| `25` | `02` | RAID-5EE Rotating Parity N with Data Restart | Level 5EE: backward parity | - X-Ways doesn't provide an option for a parity offset with this level. <br> - Can be reconstructed with 1 missing disk. |
-| `25` | `03` | RAID-5EE Rotating Parity N with Data Continuation | | _Cannot be reconstructed._ |
-| `35` | `00` | RAID-5 Rotating Parity 0 after R Stripes with Data Restart | | _Cannot be reconstructed._ |
-| `35` | `02` | RAID-5 Rotating Parity N after R Stripes with Data Restart | | _Cannot be reconstructed._ |
-| `35` | `03` | RAID-5 Rotating Parity N after R Stripes with Data Continuation | | _Cannot be reconstructed._ |
-
-
-
-<br>
 
 ## Usage
 The usage instructions below will assume you have disk images for the devices connected to the raid controller.  If you have not yet imaged a device, but have terminal access you can identify whether a device has a DDF metadata superblock with the following command:
@@ -130,13 +93,13 @@ _A [standalone guide](Reconstruction%20Guide.md) has also been created for this 
     ![](./Screenshots/usage_3.png)
 4. Repeat steps 2-3 for the remaining evidence objects (disks).  You may ignore most fields for subsequent disks in the same VD (as identified by the VD Guid) and just record the PD Reference. 
 5. In the **Specialist** menu select **Reconstruct RAID System**. Enter components and options identified in the preceding steps.
-   1. Select the RAID level/type based on the RLQ and PRL, translated in the _Reconstruction Options_ table above.
+   1. Select the RAID level/type based on the RLQ and PRL, translated in the [_Reconstruction Options_](Documentation/Reconstruction%20Options.md) documentation.
    2. Take the strip size in sectors from the *Strip_Size* field extracted previously. 
       > **Note:** X-Ways specifies this in sectors and the formula provided (`(2^n)*512`) calculates the strip size in _bytes_.  The *DDF-Reconstruction* template used here assumes a 512-byte sector, and if you made it this far the assumption is proven accurate.  The true formula is therefore `2^n`
 6. Press **OK** to complete the reconstruction.  This will add a new item to the tab bar titled (in this example) _RAID 5: Disk-1 + Disk-4 + Disk-2 + Disk-3 + Disk-5_.  Right-Click this and add it to the case.  If you have completed all steps correctly, you will see the volume and data contained in the original volume(s) located on the RAID array.
 
 ### Other Templates
-Load the relevant evidence objects (disks) and apple the template, as specified in Step 2 of the reconstruction usage guide.  Some fields will have an asterisk (*) suffix; this indicates that there is additional documentation for the interpretation of the field value, available in the [DDF Fields.md documentation](./Documentation/DDF%20Fields.md).
+Load the relevant evidence objects (disks) and apple the template, as specified in Step 2 of the reconstruction usage guide.  Some fields will have an asterisk (*) suffix; this indicates that there is additional documentation for the interpretation of the field value, available in the [DDF Fields](./Documentation/DDF%20Fields.md) documentation.
 
 <br>
 
