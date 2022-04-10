@@ -1,5 +1,5 @@
 template "DDF - Reconstruction"
-description "Parses the DDF header fields contained within the DDF metadata superblock at the end of a RAID disk"
+description "DDF metadata superblock VD reconstruction fields"
 applies_to disk
 sector-aligned
 read-only

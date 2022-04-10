@@ -1,4 +1,4 @@
-# DDF Metadata Analysis in X-Ways Forensics
+****# DDF Metadata Analysis in X-Ways Forensics
 This repository provides resources necessary to reconstruct RAID arrays in X-Ways Forensics using the DDF Metadata (RAID superblock), utilised by modern hardware RAID controllers.
 
 ## Table of contents
@@ -49,11 +49,12 @@ The [DDF Specification](https://www.snia.org/sites/default/files/SNIA-DDFv1.2.pd
 - **Section Context**: Context refers to the scope of information contained within a section. Sections with a _Global_ context will be identical for all PDs connected to the same controller at the same time. Sections with a _Local_ context will be specific to a PD or VD(s) which it is assigned to.
     | Section                    | Context | Description                                                                                                  |
     | -------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+    | DDF Header                 | Global  |                                                                                                              |
     | Controller Data            | Global  | Provides details about the last controller that operated on an attached RAID configuration.                  |
     | Physical Disk Recrods      | Global  | Lists all configured PDs attached to a controller.                                                           |
     | Virtual Disk Records       | Global  | Lists all configured VDs tracked by the DDF structure.                                                       |
     | Configuration Records      | Local   | Lists the configuration of VD(s) to which the current PD is assigned, or contains a spare assignment record. |
-    | Physical Disk Data Records | Local   | Stores the PD GUID and Reference number.                                                                     |
+    | Physical Disk Data         | Local   | Stores the PD GUID and Reference number.                                                                     |
     > **Note**: several _OPTIONAL_ sections have been omitted.  They are not consistent enough to have value.
 
 Global section structures are particularly useful if you have a subset of disks from a server and want details on other PDs and VDs which may have been used with the same RAID controller. Local section structures  are necessary to reconstruct arrays; the PRL, RLQ, SRL, strip size, and PD reference sequence may be translated into options for the _Reconstruct RAID System_ X-Ways feature in X-Ways Forensics.
@@ -65,7 +66,7 @@ There are four templates available within this repository, each with a different
 1. [`DDF - Reconstruction`](./Templates/DDF%20-%20Reconstruction.tpl):  This extracts the bare-minimum details required to reconstruct an array from the (local) virtual disk settings identified on a given disk.  It will display the virtual disk (array) settings such as raid level, parity, etc., as well as the order of physical disks within the array.  It will also extract the physical disk reference for the current disk.
 2. `DDF - Global`
 3. `DDF - Local`
-4. `DDF - All`
+4. [`DDF - All`](./Templates/DDF%20-%20All.tpl): This extracts all sections from the DDF metadata and presents them in a single window.
 
 <br>
 
@@ -134,13 +135,16 @@ _A [standalone guide](Reconstruction%20Guide.md) has also been created for this 
       > **Note:** X-Ways specifies this in sectors and the formula provided (`(2^n)*512`) calculates the strip size in _bytes_.  The *DDF-Reconstruction* template used here assumes a 512-byte sector, and if you made it this far the assumption is proven accurate.  The true formula is therefore `2^n`
 6. Press **OK** to complete the reconstruction.  This will add a new item to the tab bar titled (in this example) _RAID 5: Disk-1 + Disk-4 + Disk-2 + Disk-3 + Disk-5_.  Right-Click this and add it to the case.  If you have completed all steps correctly, you will see the volume and data contained in the original volume(s) located on the RAID array.
 
+### Other Templates
+Load the relevant evidence objects (disks) and apple the template, as specified in Step 2 of the reconstruction usage guide.  Some fields will have an asterisk (*) suffix; this indicates that there is additional documentation for the interpretation of the field value, available in the [DDF Fields.md documentation](./Documentation/DDF%20Fields.md).
+
 <br>
 
 ## ToDo
 1. Create additional [templates](./Templates/):
    1. Global section context
    2. Local section context
-   3. All metadata
+   3. ~~All metadata~~
 2. Test additional [mdadm](./Testing/mdadm%20setup.md) parity layouts to confirm the reconstruction options table:
    1. right-asymmetric
    2. right-symmetric
