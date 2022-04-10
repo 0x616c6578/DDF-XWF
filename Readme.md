@@ -1,4 +1,4 @@
-****# DDF Metadata Analysis in X-Ways Forensics
+# DDF Metadata Analysis in X-Ways Forensics
 This repository provides resources necessary to reconstruct RAID arrays in X-Ways Forensics using the DDF Metadata (RAID superblock), utilised by modern hardware RAID controllers.
 
 ## Table of contents
