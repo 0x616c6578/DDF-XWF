@@ -6,7 +6,7 @@ The following field descriptions have been extracted from the [DDF Specification
 - A field with a value comprised entirely of `0xF` is "reserved" or likely unused in the current configuration
 - A field with a value of `-1` indicates the value has not been set.
 - Shorthand field descriptions have been used in the table below:
-  - For _bits_, the interpretatioon (value) provided is valid for when the bit is true/set (`1`). Assume the inverse if the bit is not set, unless there is an explicit _not_ value specified e.g. "Revertible (!committable)"
+  - For _bits_, the interpretation (value) provided is valid for when the bit is true/set (`1`). Assume the inverse if the bit is not set, unless there is an explicit _not_ value specified e.g. "Revertible (!committable)"
 - All timestamps specified in the DDF metadata are in _GPS Time_. This is similar to Unix time, though it has a different epoch: **6 Jan 1980**.  There is currently no valid variable type available in X-Ways templates so an integer has been provided, representing the number of seconds since the epoch.
 
 <br>
